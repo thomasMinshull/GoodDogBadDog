@@ -1,16 +1,12 @@
-import React, { Component, View } from 'react';
+import React, { Component } from 'react';
 
 export default class DogImage extends Component {
 
-    render() {
-        switch(String(this.props.pageState)) {
-            case "Fetch":
-                break; 
-            case "Fetching":
-                break; 
-            default: 
-                break; 
-        } 
-        return(<div/>); 
+    render(props) {
+        if (String(this.props.renderingState) === "Fetched") {
+            return (<img src={this.props.image} alt={"Dog"}/>);
+        } else {
+            return (<p>fetching...</p>);
+        }
     }; 
 }

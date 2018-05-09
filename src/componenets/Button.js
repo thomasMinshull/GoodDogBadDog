@@ -13,7 +13,7 @@ class Button extends React.Component {
       <div >
         <button
           onClick={this.handleClick}
-        >
+         disabled={this.props.disabled} >
           {this.props.name}
         </button>
       </div>
@@ -22,6 +22,7 @@ class Button extends React.Component {
 }
 Button.propTypes = {
   name: PropTypes.string,
+  disabled: PropTypes.bool, 
   clickHandler: PropTypes.func
 };
 export default Button;

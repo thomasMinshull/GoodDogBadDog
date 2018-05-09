@@ -4,6 +4,10 @@ import React, { Component } from 'react';
 export default class DogHeader extends Component {
 
     render() {
+        if (String(this.props.renderingState) !== "Fetched") {
+            return(<h1>Woof ?</h1>);
+        }
+
        switch(String(this.props.dogType)) {
             case "Good":
                 return(<h1>Good Boy</h1>); 
