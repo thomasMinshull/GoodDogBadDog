@@ -8,7 +8,7 @@ export default class Mainpage extends Component {
     state = {
         renderingState: "Fetching", // Fetching | Fetched 
         dogType: "No vote", // No vote cast | Good | Bad
-        dogImage: "https://images.dog.ceo/breeds/leonberg/n02111129_1.jpg"
+        dogImage: ""
     }
 
     componentWillMount = () => {
@@ -38,27 +38,27 @@ export default class Mainpage extends Component {
 
     render() {
         return(
-            <div style= { { display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center', alignContent: 'center'} }>
-                <DogHeader dogType={this.state.dogType} renderingState={this.state.renderingState}/>
+            <div style= { styles.column }>
+                <DogHeader 
+                    dogType={this.state.dogType} 
+                    renderingState={this.state.renderingState}
+                />
                 <DogImage 
                     image= { this.state.dogImage }
                     renderingState= { this.state.renderingState }
                 /> 
-                <div style= { { display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'spaceBetween', alignItems: 'stretch'} }> 
+                <div style= { styles.buttonRow }> 
                     <Button 
-                        style={ {flex: .2} }
                         name="Good Dog" 
                         disabled={ this.isVotingDisabled() } 
                         clickHandler= { () => { this.setState( { dogType: "Good" })}} 
                     />
                     <Button 
-                        style={ {flex: .2} }
                         name="Next" 
                         disabled={ this.state.renderingState === "Fetching" } 
                         clickHandler= { this.fetchNextImage } 
                     />
                     <Button 
-                        style={ {flex: .2} }
                         name="Bad Dog" 
                         disabled={ this.isVotingDisabled() } 
                         clickHandler= { () => { this.setState( { dogType: "Bad" })}} 
@@ -69,3 +69,20 @@ export default class Mainpage extends Component {
     }; 
 }
 
+const styles = {
+    column: { 
+        display: 'flex', 
+        flexDirection: 'column', 
+        flexWrap: 'nowrap', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        alignContent: 'center'
+    },
+    buttonRow: { 
+        display: 'flex', 
+        flexDirection: 'row', 
+        flexWrap: 'nowrap', 
+        justifyContent: 'spaceBetween', 
+        alignItems: 'stretch'
+    }
+};

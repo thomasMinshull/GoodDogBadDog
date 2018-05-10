@@ -13,8 +13,7 @@ class Button extends React.Component {
         <button
           style={ this.props.disabled ? styles.disabled : styles.enabled }
           onClick={this.handleClick}
-          disabled={this.props.disabled} 
-
+          disabled={this.props.disabled}
         >
           {this.props.name}
         </button>
