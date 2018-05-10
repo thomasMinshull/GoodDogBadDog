@@ -11,8 +11,6 @@ export default class Mainpage extends Component {
         dogImage: "https://images.dog.ceo/breeds/leonberg/n02111129_1.jpg"
     }
 
-
-
     componentWillMount = () => {
         this.fetchNextImage();
     }
@@ -46,18 +44,21 @@ export default class Mainpage extends Component {
                     image= { this.state.dogImage }
                     renderingState= { this.state.renderingState }
                 /> 
-                <div style= { { display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'baseLine'} }> 
+                <div style= { { display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'spaceBetween', alignItems: 'stretch'} }> 
                     <Button 
+                        style={ {flex: .2} }
                         name="Good Dog" 
                         disabled={ this.isVotingDisabled() } 
                         clickHandler= { () => { this.setState( { dogType: "Good" })}} 
                     />
                     <Button 
+                        style={ {flex: .2} }
                         name="Next" 
                         disabled={ this.state.renderingState === "Fetching" } 
                         clickHandler= { this.fetchNextImage } 
                     />
                     <Button 
+                        style={ {flex: .2} }
                         name="Bad Dog" 
                         disabled={ this.isVotingDisabled() } 
                         clickHandler= { () => { this.setState( { dogType: "Bad" })}} 
