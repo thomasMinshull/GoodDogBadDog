@@ -1,4 +1,5 @@
-import React, { Component, Image } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class DogImage extends Component {
 
@@ -32,3 +33,8 @@ const styles = {
         width: 'auto'
     }
 }
+
+DogImage.propTypes = {
+    renderingState: PropTypes.oneOf(['Fetched','Fetching']),
+    image: PropTypes.string
+};

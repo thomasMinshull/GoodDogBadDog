@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class DogHeader extends Component {
 
@@ -6,7 +7,7 @@ export default class DogHeader extends Component {
         if (String(this.props.renderingState) !== "Fetched") {
             return(<h1 style={ styles.h1 }>Woof ?</h1>);
         }
-         
+
         switch(String(this.props.dogType)) {
             case "Good":
                 return(<h1 style={ styles.h1 }>Good Boy</h1>); 
@@ -24,3 +25,8 @@ const styles = {
         fontFamily: "Georgia, serif"
     }
 }
+
+DogHeader.propTypes = {
+    renderingState: PropTypes.oneOf(['Fetched','Fetching']),
+    dogType: PropTypes.oneOf(["No vote","Good","Bad"]),
+};

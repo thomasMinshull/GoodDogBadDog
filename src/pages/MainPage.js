@@ -6,8 +6,8 @@ import DogImage from '../componenets/DogImage';
 
 export default class Mainpage extends Component {
     state = {
-        renderingState: "Fetching", // Fetching | Fetched 
-        dogType: "No vote", // No vote cast | Good | Bad
+        renderingState: "Fetching", 
+        dogType: "No vote", // No vote | Good | Bad
         dogImage: ""
     }
 
