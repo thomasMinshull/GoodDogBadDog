@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class DogImage extends Component {
-
-    render(props) {
-        if (String(this.props.renderingState) === "Fetched") {
-            return (<img src={this.props.image} alt={"Dog"} style={ styles.image }/>);
+const DogImage = (props) => {
+        if (String(props.renderingState) === "Fetched") {
+            return (<img src={props.image} alt={"Dog"} style={ styles.image }/>);
         } else {
             return (
                 <div style={ styles.div }><p style={ styles.p }>fetching...</p></div>
             );
         }
     }; 
-}
 
 const styles = {
     div: {
@@ -38,3 +35,5 @@ DogImage.propTypes = {
     renderingState: PropTypes.oneOf(['Fetched','Fetching']),
     image: PropTypes.string
 };
+
+export default DogImage;
