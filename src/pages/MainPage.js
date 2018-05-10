@@ -11,6 +11,8 @@ export default class Mainpage extends Component {
         dogImage: "https://images.dog.ceo/breeds/leonberg/n02111129_1.jpg"
     }
 
+
+
     componentWillMount = () => {
         this.fetchNextImage();
     }
@@ -38,15 +40,13 @@ export default class Mainpage extends Component {
 
     render() {
         return(
-            <div>
-                <div> 
+            <div style= { { display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center', alignContent: 'center'} }>
                 <DogHeader dogType={this.state.dogType} renderingState={this.state.renderingState}/>
                 <DogImage 
                     image= { this.state.dogImage }
                     renderingState= { this.state.renderingState }
-                />
-                </div> 
-                <div> 
+                /> 
+                <div style= { { display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'baseLine'} }> 
                     <Button 
                         name="Good Dog" 
                         disabled={ this.isVotingDisabled() } 
@@ -67,3 +67,4 @@ export default class Mainpage extends Component {
         ); 
     }; 
 }
+
