@@ -1,0 +1,1 @@
+Note: RUN PORT=3001 node app.js in order to avoid port conflict with react app when running locally 
