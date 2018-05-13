@@ -10,13 +10,13 @@ exports.create = function(id, vote, done) {
   }
   
 exports.getVoteByID = function(id, done) {
-    db.get().query('Select Vote FROM Dogs WHERE Id=?', id, function(err, rows) {
+    db.get().query('Select Vote FROM Dogs WHERE Id=?', id, function(err, result, fields) {
         if (err) return done(err)
-        done(null, rows)
+        done(null, result)
     })
 }
 
-exports.upVoteForID = function(id, vote, done) {
+exports.voteForID = function(id, vote, done) {
     var values = [vote, id]
     db.get().query('Update Dogs SET Vote=? WHERE Id=?', values, function (err) {
       if (err) return done(err)
