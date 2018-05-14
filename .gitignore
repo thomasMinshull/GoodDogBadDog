@@ -19,3 +19,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+./good-dog-gad-dog-server/client/node_modules/.cache/babel-loader/*
