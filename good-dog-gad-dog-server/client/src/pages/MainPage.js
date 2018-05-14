@@ -25,7 +25,7 @@ export default class Mainpage extends Component {
             if (String(response.data.status) === "success") {
                 axios.get('/dog', {
                     params: {
-                        id: response.data.message
+                        id: this.idFrom(response.data.message)
                     }
                 }).then( (voteResponse) => {
                     if (voteResponse.request.status !== 200) this.fetchNextImage();  
@@ -38,7 +38,7 @@ export default class Mainpage extends Component {
                         dogType: "No vote",
                         currentScore: score
                     });
-                })
+                });
  
             } else {
                  this.fetchNextImage();
@@ -49,7 +49,7 @@ export default class Mainpage extends Component {
     upVote = () => { 
         axios.put('/upvote',{
             params: {
-                id: this.state.dogImage,
+                id: this.idFrom(this.state.dogImage)
             }
         })
         this.setState( (prevState, props) => ({ 
@@ -61,9 +61,10 @@ export default class Mainpage extends Component {
     downVote = () => {
         axios.put('/downvote',{
             params: {
-                id: this.state.dogImage,
+                id: this.idFrom(this.state.dogImage)
             }
         })
+
         this.setState( (prevState, props) => ({ 
             dogType: "Bad", 
             currentScore: prevState.currentScore - 1 
@@ -109,6 +110,12 @@ export default class Mainpage extends Component {
             </div>
         ); 
     }; 
+
+    // helper 
+    idFrom = (url) => {
+        const components = url.split('/');
+        return components[components.length-1];
+    }
 }
 
 const styles = {

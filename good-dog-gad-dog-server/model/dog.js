@@ -24,15 +24,16 @@ exports.upvoteID = function(id, done) {
   var values = [id]; 
   db.get().query('Update Dogs SET Vote=Vote+1 WHERE Id=?', values, function (err) {
     if (err) return done(err)
-    done(null)
+    done()
   })
 }
 
 exports.downvoteID = function(id, done) {
   var values = [id]; 
   db.get().query('Update Dogs SET Vote=Vote-1 WHERE Id=?', values, function (err) {
+    console.log('downvote id: ' + id + 'found err: ' + err)
     if (err) return done(err)
-    done(null)
+    done()
   })
 }
   
