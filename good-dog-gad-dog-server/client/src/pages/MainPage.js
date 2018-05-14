@@ -3,12 +3,14 @@ import axios from 'axios';
 import Button from '../componenets/Button'; 
 import DogHeader from '../componenets/DogHeader'; 
 import DogImage from '../componenets/DogImage';
+import P from '../componenets/P';
 
 export default class Mainpage extends Component {
     state = {
         renderingState: "Fetching", 
-        dogType: "No vote", // No vote | Good | Bad
-        dogImage: ""
+        dogType: "No vote", 
+        dogImage: "",
+        currentScore: ""
     }
 
     componentWillMount = () => {
@@ -20,16 +22,55 @@ export default class Mainpage extends Component {
 
         axios.get('https://dog.ceo/api/breeds/image/random').then(response => { 
                      
-                if (String(response.data.status) === "success") {
-                        this.setState( { 
-                            dogImage: response.data.message, 
-                            renderingState: "Fetched", 
-                            dogType: "No vote"
-                        }); 
-                    } else {
-                        this.fetchNextImage();
-                    } 
-                });
+            if (String(response.data.status) === "success") {
+                axios.get('/dog', {
+                    params: {
+                        id: response.data.message
+                    }
+                }).then( (voteResponse) => {
+                    //if (voteResponse.request.status !== '200') this.fetchNextImage();  
+
+                    const score = voteResponse.data[0].Vote;
+
+                    this.setState( { 
+                        dogImage: response.data.message, 
+                        renderingState: "Fetched", 
+                        dogType: "No vote",
+                        currentScore: score
+                    });
+                })
+ 
+            } else {
+                // this.fetchNextImage();
+            } 
+            });
+    }
+
+    upVote = () => {
+        // ToDo suseptable to race condition need to fix 
+        axios.put('/dog',{
+            params: {
+                id: this.state.dogImage,
+                vote: this.state.currentScore + 1
+            }
+        })
+        this.setState( (prevState, props) => ({ 
+            dogType: "Good", 
+            currentScore: prevState.currentScore + 1 
+        }));
+    }
+
+    downVote = () => {
+        axios.put('/dog',{
+            params: {
+                id: this.state.dogImage,
+                vote: this.state.currentScore - 1
+            }
+        })
+        this.setState( (prevState, props) => ({ 
+            dogType: "Bad", 
+            currentScore: prevState.currentScore - 1 
+        }));
     }
 
     isVotingDisabled = () => {
@@ -51,7 +92,7 @@ export default class Mainpage extends Component {
                     <Button 
                         name="Good Dog" 
                         disabled={ this.isVotingDisabled() } 
-                        clickHandler= { () => { this.setState( { dogType: "Good" })}} 
+                        clickHandler= { () => { this.upVote() }} 
                     />
                     <Button 
                         name="Next" 
@@ -61,9 +102,13 @@ export default class Mainpage extends Component {
                     <Button 
                         name="Bad Dog" 
                         disabled={ this.isVotingDisabled() } 
-                        clickHandler= { () => { this.setState( { dogType: "Bad" })}} 
+                        clickHandler= { () => { this.downVote() }} 
                     /> 
-                </div> 
+                </div>
+                <P 
+                    style={ styles.p } 
+                    text={ `Current Score ${ this.state.currentScore } `}
+                /> 
             </div>
         ); 
     }; 
@@ -84,5 +129,10 @@ const styles = {
         flexWrap: 'nowrap', 
         justifyContent: 'spaceBetween', 
         alignItems: 'stretch'
-    }
+    },
+    p: {
+        fontSize: 'xx-large', 
+        color: '#99C24D',
+        fontFamily: "Georgia, serif"
+    },
 };

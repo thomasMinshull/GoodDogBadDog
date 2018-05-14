@@ -22,7 +22,6 @@ const styles = {
         fontSize: 'xx-large', 
         color: '#99C24D',
         fontFamily: "Georgia, serif"
-
     },
     image: {
         maxWidth: '100vh', 
