@@ -28,7 +28,7 @@ export default class Mainpage extends Component {
                         id: response.data.message
                     }
                 }).then( (voteResponse) => {
-                    //if (voteResponse.request.status !== '200') this.fetchNextImage();  
+                    if (voteResponse.request.status !== 200) this.fetchNextImage();  
 
                     const score = voteResponse.data[0].Vote;
 
@@ -41,17 +41,15 @@ export default class Mainpage extends Component {
                 })
  
             } else {
-                // this.fetchNextImage();
+                 this.fetchNextImage();
             } 
             });
     }
 
-    upVote = () => {
-        // ToDo suseptable to race condition need to fix 
-        axios.put('/dog',{
+    upVote = () => { 
+        axios.put('/upvote',{
             params: {
                 id: this.state.dogImage,
-                vote: this.state.currentScore + 1
             }
         })
         this.setState( (prevState, props) => ({ 
@@ -61,10 +59,9 @@ export default class Mainpage extends Component {
     }
 
     downVote = () => {
-        axios.put('/dog',{
+        axios.put('/downvote',{
             params: {
                 id: this.state.dogImage,
-                vote: this.state.currentScore - 1
             }
         })
         this.setState( (prevState, props) => ({ 

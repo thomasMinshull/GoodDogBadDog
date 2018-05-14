@@ -5,6 +5,7 @@ var dog = require('../model/dog');
 /* /dog?id=url  */
 router.get('/dog', function(req, res) {
   const id = req.query.id
+  console.log('id: ' + id ); 
   
   dog.getVoteByID(id, (err, result) => {
     if (err) return res.sendStatus(500).json(err);
@@ -21,30 +22,24 @@ router.get('/dog', function(req, res) {
   });
 })
 
-/* /dog?id=url&vote=2 */ 
-router.put('/dog', function(req, res) {
+/* /upvote?id=url */ 
+router.put('upvote', function(req, res) { 
   const id = req.query.id; 
-  const vote = req.query.vote; 
 
-  dog.getVoteByID(id, (err, result) => {
+  dog.upvoteID(id, (err, result) => {
     if (err) return res.sendStatus(500).json(err);
+    return res.sendStatus(200);
+  })
+});
 
-    if (result.length == 0) {
-      dog.create(id, vote, (err) => { 
-        if (err) return res.sendStatus(500).json(err);
+/* /downvote?id=url */ 
+router.put('downvote', function(req, res) {
+  const id = req.query.id; 
 
-        return res.sendStatus(200); 
-      });
-    } else {
-      console.log('happy path id: ' + id + ' vote: ' + vote); 
-      dog.voteForID(id, vote, (err) => {
-        if (err) return res.sendStatus(500).json(err);
-        
-        console.log('updated vote count for dog with id: ' + id);
-        return res.sendStatus(200); 
-      });
-    }
-  });
+  dog.downvoteID(id, (err, result) => {
+    if (err) return res.sendStatus(500).json(err);
+    return res.sendStatus(200);
+  })
 });
 
 router.get('/', function(req, res) {

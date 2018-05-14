@@ -18,14 +18,21 @@ exports.getVoteByID = function(id, done) {
   } catch {
     console.log("Was it caught?")
   }
-
 }
 
-exports.voteForID = function(id, vote, done) {
-    var values = [vote, id]
-    db.get().query('Update Dogs SET Vote=? WHERE Id=?', values, function (err) {
-      if (err) return done(err)
-      done(null)
-    })
-  }
+exports.upvoteID = function(id, done) {
+  var values = [id]; 
+  db.get().query('Update Dogs SET Vote=Vote+1 WHERE Id=?', values, function (err) {
+    if (err) return done(err)
+    done(null)
+  })
+}
+
+exports.downvoteID = function(id, done) {
+  var values = [id]; 
+  db.get().query('Update Dogs SET Vote=Vote-1 WHERE Id=?', values, function (err) {
+    if (err) return done(err)
+    done(null)
+  })
+}
   
