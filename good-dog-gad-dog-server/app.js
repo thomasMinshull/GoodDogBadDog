@@ -10,6 +10,8 @@ var db = require('./model/db')
 
 var app = express();
 
+const port = process.env.PORT || 5000;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -33,8 +35,8 @@ db.connect(db.MODE_PRODUCTION, function(err) {
     console.log('Unable to connect to MySQL.')
     process.exit(1)
   } else {
-    app.listen(3000, function() {
-      console.log('Listening on port 3000...')
+    app.listen(port, function() {
+      console.log(`Listening on port ${port}`)
     })
   }
 })
