@@ -11,7 +11,7 @@ exports.create = function(id, vote, done) {
   
 exports.getVoteByID = function(id, done) {
   try {
-    db.get().query('Select Vote FROM Dogs WHERE Id=?', id, function(err, result, fields) {
+    db.get().query('SELECT Vote FROM Dogs WHERE Id=?', id, function(err, result, fields) {
       if (err) return done(err);
       done(null, result)
     });
@@ -21,17 +21,14 @@ exports.getVoteByID = function(id, done) {
 }
 
 exports.upvoteID = function(id, done) {
-  var values = [id]; 
-  db.get().query('Update Dogs SET Vote=Vote+1 WHERE Id=?', values, function (err) {
+  db.get().query({sql: `UPDATE Dogs SET Vote=Vote+1 WHERE Id='${id}'`, timeout: 1000}, function (err) {
     if (err) return done(err)
     done()
   })
 }
 
-exports.downvoteID = function(id, done) {
-  var values = [id]; 
-  db.get().query('Update Dogs SET Vote=Vote-1 WHERE Id=?', values, function (err) {
-    console.log('downvote id: ' + id + 'found err: ' + err)
+exports.downvoteID = function(id, done) { 
+  db.get().query({sql: `UPDATE Dogs SET Vote='Vote-1' WHERE Id='${id}'`, timeout: 1000}, function (err) {
     if (err) return done(err)
     done()
   })

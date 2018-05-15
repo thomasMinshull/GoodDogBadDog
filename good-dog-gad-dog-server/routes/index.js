@@ -25,7 +25,7 @@ router.get('/dog', function(req, res) {
 /* /upvote?id=url */ 
 router.put('/upvote', function(req, res) { 
   const id = req.query.id; 
-
+  console.log("/upvote param id " + id )
   dog.upvoteID(id, (err, result) => {
     if (err) return res.sendStatus(500).json(err);
 
@@ -38,7 +38,6 @@ router.put('/downvote', function(req, res) {
   const id = req.query.id; 
 
   dog.downvoteID(id, (err, result) => {
-    console.log(' failing in down vote with err: ' + err)
     if (err) return res.sendStatus(500).json(err);
 
     return res.sendStatus(200);
