@@ -5,7 +5,6 @@ var dog = require('../model/dog');
 /* /dog?id=url  */
 router.get('/dog', function(req, res) {
   const id = req.query.id;
-  console.log('id: ' + id ); 
   
   dog.getVoteByID(id, (err, result) => {
     if (err) return res.sendStatus(500).json(err);
@@ -25,7 +24,7 @@ router.get('/dog', function(req, res) {
 /* /upvote?id=url */ 
 router.put('/upvote', function(req, res) { 
   const id = req.query.id; 
-  console.log("/upvote param id " + id )
+
   dog.upvoteID(id, (err, result) => {
     if (err) return res.sendStatus(500).json(err);
 

@@ -3,20 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Button extends React.Component {
-  handleClick = (identifier) => {
-    if (identifier) {
-      this.props.clickHandler(this.props.identifier);
-    } else {
-      this.props.clickHandler();
-    }
-  }
-
   render() {
 
     return (
         <button
           style={ this.props.disabled ? styles.disabled : styles.enabled }
-          onClick={ () => { this.handleClick(this.props.identifier) } }
+          onClick={ () => { this.props.clickHandler(this.props.identifier); } }
           disabled={this.props.disabled}
         >
           {this.props.name}
