@@ -10,14 +10,10 @@ exports.create = function(id, vote, done) {
   }
   
 exports.getVoteByID = function(id, done) {
-  try {
-    db.get().query('SELECT Vote FROM Dogs WHERE Id=?', id, function(err, result, fields) {
-      if (err) return done(err);
-      done(null, result)
-    });
-  } catch {
-    console.log("Was it caught?")
-  }
+  db.get().query('SELECT Vote FROM Dogs WHERE Id=?', id, function(err, result, fields) {
+    if (err) return done(err);
+    done(null, result)
+  });
 }
 
 exports.upvoteID = function(id, done) {
