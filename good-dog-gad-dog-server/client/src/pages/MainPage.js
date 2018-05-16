@@ -46,22 +46,20 @@ export default class Mainpage extends Component {
             });
     }
 
-    upVote = () => { 
-        axios.put('/upvote',{
-            params: {
-                id: this.idFrom(this.state.dogImage)
-            }
-        })
+    upVote(id) { 
+        const upvotePath = '/upvote?id=' + id;
+        axios.put(upvotePath)
+
         this.setState( (prevState, props) => ({ 
             dogType: "Good", 
             currentScore: prevState.currentScore + 1 
         }));
     }
 
-    downVote = () => {
+    downVote(id) {
         axios.put('/downvote',{
             params: {
-                id: this.idFrom(this.state.dogImage)
+                id: id
             }
         })
 
@@ -88,11 +86,13 @@ export default class Mainpage extends Component {
                 /> 
                 <div style= { styles.buttonRow }> 
                     <Button 
+                        identifier= { this.idFrom(this.state.dogImage) }
                         name="Good Dog" 
                         disabled={ this.isVotingDisabled() } 
-                        clickHandler= { () => { this.upVote() }} 
+                        clickHandler= { this.upVote.bind(this) } 
                     />
                     <Button 
+                        identifier= { this.idFrom(this.state.dogImage) }
                         name="Next" 
                         disabled={ this.state.renderingState === "Fetching" } 
                         clickHandler= { this.fetchNextImage } 
@@ -100,7 +100,7 @@ export default class Mainpage extends Component {
                     <Button 
                         name="Bad Dog" 
                         disabled={ this.isVotingDisabled() } 
-                        clickHandler= { () => { this.downVote() }} 
+                        clickHandler= { this.downVote.bind(this) } 
                     /> 
                 </div>
                 <P 
@@ -113,8 +113,8 @@ export default class Mainpage extends Component {
 
     // helper 
     idFrom = (url) => {
-        const components = url.split('/');
-        return components[components.length-1];
+        let components = url.split("/");
+        return components[components.length-1].slice(0, -4);
     }
 }
 
