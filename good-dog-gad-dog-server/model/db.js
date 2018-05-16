@@ -61,3 +61,10 @@ exports.drop = function(tables, done) {
         }
     }
 */ 
+
+/* 
+    CREATE TABLE Dogs (
+      Id varchar(255),
+      Vote decimal
+    );
+*/ 
